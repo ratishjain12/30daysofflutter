@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_catalog/models/catalog.dart';
-import 'package:flutter_catalog/widget/item_widgets.dart';
+import 'package:flutter_catalog/pages/page_details.dart';
 import 'package:flutter_catalog/widget/themes.dart';
 import 'dart:convert';
 import '../widget/drawer.dart';
@@ -43,9 +43,7 @@ class _HomePageState extends State<HomePage> {
                 if (CatalogModel.items != null && CatalogModel.items.isNotEmpty)
                   catalogList().expand()
                 else
-                  Center(
-                    child: CircularProgressIndicator(),
-                  )
+                  CircularProgressIndicator().centered().expand(),
               ],
             )),
       ),
@@ -79,7 +77,15 @@ class catalogList extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = CatalogModel.items[index];
 
-        return CatalogItem(catalogItem: item);
+        return InkWell(
+          onTap: () => {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => pageDetails(catalog: item)))
+          },
+          child: CatalogItem(catalogItem: item),
+        );
       },
     );
   }
@@ -95,14 +101,17 @@ class CatalogItem extends StatelessWidget {
     return VxBox(
         child: Row(
       children: [
-        Image.network(catalogItem.image)
-            .box
-            .rounded
-            .p8
-            .color(MyThemes.creamishColor)
-            .make()
-            .p8()
-            .w40(context),
+        Hero(
+          tag: Key(catalogItem.id.toString()),
+          child: Image.network(catalogItem.image)
+              .box
+              .rounded
+              .p8
+              .color(MyThemes.creamishColor)
+              .make()
+              .p8()
+              .w40(context),
+        ),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
