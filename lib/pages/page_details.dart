@@ -17,8 +17,28 @@ class pageDetails extends StatelessWidget {
         elevation: 0.0,
         foregroundColor: Colors.black,
       ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: ButtonBar(
+          alignment: MainAxisAlignment.spaceBetween,
+          children: [
+            "\$${catalog.price}".text.bold.xl3.red500.make(),
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(MyThemes.bluishColor),
+                  shape: MaterialStateProperty.all(
+                    StadiumBorder(),
+                  )),
+              child: "buy".text.xl.make(),
+            ).wh(100, 50),
+          ],
+        ).p16(),
+      ),
       backgroundColor: MyThemes.creamishColor,
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Hero(
@@ -40,7 +60,9 @@ class pageDetails extends StatelessWidget {
                           .xl4
                           .color(MyThemes.bluishColor)
                           .make(),
-                      "${catalog.desc}".text.xl.make()
+                      catalog.desc.text.xl
+                          .textStyle(context.captionStyle)
+                          .make()
                     ],
                   ).py64()),
             ).pOnly(top: 16)),
