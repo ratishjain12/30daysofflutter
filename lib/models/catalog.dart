@@ -1,6 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+class CatalogModel {
+  static List<Item> items = [];
+}
+
 class Item {
   final int id;
   final String name;
@@ -88,8 +92,4 @@ class Item {
         color.hashCode ^
         image.hashCode;
   }
-}
-
-class CatalogModel {
-  static List<Item> items = [];
 }
